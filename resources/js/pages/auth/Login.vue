@@ -29,10 +29,10 @@ function submit() {
 
 <template>
   <AuthBase
-    title="Log in to your account"
-    description="Enter your email and password below to log in"
+    title="تسجيل الدخول إلى حسابك"
+    description="أدخل بريدك الإلكتروني وكلمة المرور لتسجيل الدخول"
   >
-    <Head title="Log in" />
+    <Head title="تسجيل الدخول" />
 
     <div
       v-if="status"
@@ -44,7 +44,7 @@ function submit() {
     <form class="flex flex-col gap-6" @submit.prevent="submit">
       <div class="grid gap-6">
         <div class="grid gap-2">
-          <Label for="email">Email address</Label>
+          <Label for="email">البريد الإلكتروني</Label>
           <Input
             id="email"
             v-model="form.email"
@@ -53,21 +53,21 @@ function submit() {
             autofocus
             :tabindex="1"
             autocomplete="email"
-            placeholder="email@example.com"
+            placeholder="name@example.com"
           />
           <InputError :message="form.errors.email" />
         </div>
 
         <div class="grid gap-2">
           <div class="flex items-center justify-between">
-            <Label for="password">Password</Label>
+            <Label for="password">كلمة المرور</Label>
             <TextLink
               v-if="canResetPassword"
               :href="route('password.request')"
               class="text-sm"
               :tabindex="5"
             >
-              Forgot password?
+              هل نسيت كلمة المرور؟
             </TextLink>
           </div>
           <Input
@@ -77,7 +77,7 @@ function submit() {
             required
             :tabindex="2"
             autocomplete="current-password"
-            placeholder="Password"
+            placeholder="كلمة المرور"
           />
           <InputError :message="form.errors.password" />
         </div>
@@ -89,7 +89,7 @@ function submit() {
               v-model="form.remember"
               :tabindex="3"
             />
-            <span>Remember me</span>
+            <span>تذكّرني</span>
           </Label>
         </div>
 
@@ -103,14 +103,14 @@ function submit() {
             v-if="form.processing"
             class="h-4 w-4 animate-spin"
           />
-          Log in
+          تسجيل الدخول
         </Button>
       </div>
 
       <div class="text-center text-sm text-muted-foreground">
-        Don't have an account?
+        ليس لديك حساب؟
         <TextLink :href="route('register')" :tabindex="5">
-          Sign up
+          إنشاء حساب
         </TextLink>
       </div>
     </form>

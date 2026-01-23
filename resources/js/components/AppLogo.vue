@@ -8,7 +8,7 @@ import AppLogoIcon from '@/components/AppLogoIcon.vue'
   >
     <AppLogoIcon class="fill-current" />
   </div>
-  <div class="grid flex-1 text-left text-sm">
-    <span class="truncate font-semibold leading-none">Prism Chat</span>
+  <div class="grid flex-1 text-right text-sm">
+    <span class="truncate font-semibold leading-none">بريزم شات</span>
   </div>
 </template>

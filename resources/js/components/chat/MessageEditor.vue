@@ -47,16 +47,12 @@ onMounted(() => {
       ref="textareaRef"
       v-model="message"
       class="min-h-[100px] resize-none"
-      placeholder="Edit your message..."
-      @keydown="handleKeyDown"
-    />
-
-    <div class="flex gap-2 justify-end">
+      placeholder="حرّر رسالتك..."
       <Button variant="outline" size="sm" @click="handleCancel">
-        Cancel
+        إلغاء
       </Button>
       <Button size="sm" :disabled="!message.trim()" @click="handleSave">
-        Save
+        حفظ
       </Button>
     </div>
   </div>

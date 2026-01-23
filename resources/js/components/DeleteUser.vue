@@ -45,50 +45,47 @@ function closeModal() {
 <template>
   <div class="space-y-6">
     <HeadingSmall
-      title="Delete account"
-      description="Delete your account and all of its resources"
+      title="حذف الحساب"
+      description="حذف حسابك وكل موارده"
     />
     <div
       class="space-y-4 rounded-lg border border-red-100 bg-red-50 p-4 dark:border-red-200/10 dark:bg-red-700/10"
     >
       <div class="relative space-y-0.5 text-red-600 dark:text-red-100">
         <p class="font-medium">
-          Warning
+          تحذير
         </p>
         <p class="text-sm">
-          Please proceed with caution, this cannot be undone.
+          تابع بحذر، لا يمكن التراجع عن هذا الإجراء.
         </p>
       </div>
       <Dialog>
         <DialogTrigger as-child>
           <Button variant="destructive">
-            Delete account
+            حذف الحساب
           </Button>
         </DialogTrigger>
         <DialogContent>
           <form class="space-y-6" @submit="deleteUser">
             <DialogHeader class="space-y-3">
               <DialogTitle>
-                Are you sure you want to delete your account?
+                هل أنت متأكد أنك تريد حذف حسابك؟
               </DialogTitle>
               <DialogDescription>
-                Once your account is deleted, all of its
-                resources and data will also be permanently
-                deleted. Please enter your password to confirm
-                you would like to permanently delete your
-                account.
+                بعد حذف حسابك، سيُحذف جميع موارده وبياناته بشكل دائم.
+                الرجاء إدخال كلمة المرور لتأكيد رغبتك في حذف الحساب نهائيًا.
               </DialogDescription>
             </DialogHeader>
 
             <div class="grid gap-2">
-              <Label for="password" class="sr-only">Password</Label>
+              <Label for="password" class="sr-only">كلمة المرور</Label>
               <Input
                 id="password"
                 ref="passwordInput"
                 v-model="form.password"
                 type="password"
                 name="password"
-                placeholder="Password"
+                placeholder="كلمة المرور"
               />
               <InputError :message="form.errors.password" />
             </div>
@@ -96,7 +93,7 @@ function closeModal() {
             <DialogFooter class="gap-2">
               <DialogClose as-child>
                 <Button variant="secondary" @click="closeModal">
-                  Cancel
+                  إلغاء
                 </Button>
               </DialogClose>
 
@@ -105,7 +102,7 @@ function closeModal() {
                 :disabled="form.processing"
               >
                 <button type="submit">
-                  Delete account
+                  حذف الحساب
                 </button>
               </Button>
             </DialogFooter>

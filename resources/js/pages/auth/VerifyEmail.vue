@@ -18,17 +18,16 @@ function submit() {
 
 <template>
   <AuthLayout
-    title="Verify email"
-    description="Please verify your email address by clicking on the link we just emailed to you."
+    title="تحقق من البريد الإلكتروني"
+    description="يرجى التحقق من عنوان بريدك الإلكتروني بالنقر على الرابط الذي أرسلناه إليك."
   >
-    <Head title="Email verification" />
+    <Head title="التحقق من البريد الإلكتروني" />
 
     <div
       v-if="status === 'verification-link-sent'"
       class="mb-4 text-center text-sm font-medium text-green-600"
     >
-      A new verification link has been sent to the email address you
-      provided during registration.
+      تم إرسال رابط تحقق جديد إلى عنوان البريد الإلكتروني الذي قدمته أثناء التسجيل.
     </div>
 
     <form class="space-y-6 text-center" @submit.prevent="submit">
@@ -37,7 +36,7 @@ function submit() {
           v-if="form.processing"
           class="h-4 w-4 animate-spin"
         />
-        Resend verification email
+        إعادة إرسال رابط التحقق
       </Button>
 
       <TextLink
@@ -46,7 +45,7 @@ function submit() {
         as="button"
         class="mx-auto block text-sm"
       >
-        Log out
+        تسجيل الخروج
       </TextLink>
     </form>
   </AuthLayout>

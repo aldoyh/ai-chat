@@ -24,15 +24,15 @@ function submit() {
 
 <template>
   <AuthBase
-    title="Create an account"
-    description="Enter your details below to create your account"
+    title="إنشاء حساب"
+    description="أدخل بياناتك أدناه لإنشاء حسابك"
   >
-    <Head title="Register" />
+    <Head title="التسجيل" />
 
     <form class="flex flex-col gap-6" @submit.prevent="submit">
       <div class="grid gap-6">
         <div class="grid gap-2">
-          <Label for="name">Name</Label>
+          <Label for="name">الاسم</Label>
           <Input
             id="name"
             v-model="form.name"
@@ -41,13 +41,13 @@ function submit() {
             autofocus
             :tabindex="1"
             autocomplete="name"
-            placeholder="Full name"
+            placeholder="الاسم الكامل"
           />
           <InputError :message="form.errors.name" />
         </div>
 
         <div class="grid gap-2">
-          <Label for="email">Email address</Label>
+          <Label for="email">البريد الإلكتروني</Label>
           <Input
             id="email"
             v-model="form.email"
@@ -55,13 +55,13 @@ function submit() {
             required
             :tabindex="2"
             autocomplete="email"
-            placeholder="email@example.com"
+            placeholder="name@example.com"
           />
           <InputError :message="form.errors.email" />
         </div>
 
         <div class="grid gap-2">
-          <Label for="password">Password</Label>
+          <Label for="password">كلمة المرور</Label>
           <Input
             id="password"
             v-model="form.password"
@@ -69,13 +69,13 @@ function submit() {
             required
             :tabindex="3"
             autocomplete="new-password"
-            placeholder="Password"
+            placeholder="كلمة المرور"
           />
           <InputError :message="form.errors.password" />
         </div>
 
         <div class="grid gap-2">
-          <Label for="password_confirmation">Confirm password</Label>
+          <Label for="password_confirmation">تأكيد كلمة المرور</Label>
           <Input
             id="password_confirmation"
             v-model="form.password_confirmation"
@@ -83,7 +83,7 @@ function submit() {
             required
             :tabindex="4"
             autocomplete="new-password"
-            placeholder="Confirm password"
+            placeholder="تأكيد كلمة المرور"
           />
           <InputError :message="form.errors.password_confirmation" />
         </div>
@@ -98,18 +98,18 @@ function submit() {
             v-if="form.processing"
             class="h-4 w-4 animate-spin"
           />
-          Create account
+          إنشاء الحساب
         </Button>
       </div>
 
       <div class="text-center text-sm text-muted-foreground">
-        Already have an account?
+        هل لديك حساب بالفعل؟
         <TextLink
           :href="route('login')"
           class="underline underline-offset-4"
           :tabindex="6"
         >
-          Log in
+          تسجيل الدخول
         </TextLink>
       </div>
     </form>

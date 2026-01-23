@@ -41,14 +41,14 @@ function deleteChat(chatId?: string) {
     </AlertDialogTrigger>
     <AlertDialogContent>
       <AlertDialogHeader>
-        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+        <AlertDialogTitle>هل أنت متأكد تمامًا؟</AlertDialogTitle>
         <AlertDialogDescription>
-          This action cannot be undone. This will permanently delete
-          the chat and remove all its messages from our servers.
+          لا يمكن التراجع عن هذا الإجراء. سيؤدي ذلك إلى حذف المحادثة نهائيًا
+          وإزالة جميع رسائلها من خوادمنا.
         </AlertDialogDescription>
       </AlertDialogHeader>
       <AlertDialogFooter>
-        <AlertDialogCancel>Cancel</AlertDialogCancel>
+        <AlertDialogCancel>إلغاء</AlertDialogCancel>
         <AlertDialogAction
           class="bg-destructive text-destructive-foreground hover:bg-destructive/90"
           :disabled="deleteForm.processing"
@@ -59,7 +59,7 @@ function deleteChat(chatId?: string) {
             icon="lucide:loader-2"
             class="h-4 w-4 mr-2 animate-spin"
           />
-          {{ deleteForm.processing ? "Deleting..." : "Delete Chat" }}
+          {{ deleteForm.processing ? "جارٍ الحذف..." : "حذف المحادثة" }}
         </AlertDialogAction>
       </AlertDialogFooter>
     </AlertDialogContent>

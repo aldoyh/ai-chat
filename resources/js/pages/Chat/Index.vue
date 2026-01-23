@@ -25,7 +25,7 @@ const isGuest = !page.props.auth.user
 
 const breadcrumbs: BreadcrumbItemType[] = [
   {
-    title: 'Chat',
+    title: 'الدردشة',
     href: route('chats.index'),
   },
 ]
@@ -78,7 +78,7 @@ function append(message: string): void {
 </script>
 
 <template>
-  <Head title="Chat" />
+  <Head title="الدردشة" />
   <AppLayout :breadcrumbs="breadcrumbs" :chat-history="chatHistory">
     <div class="h-[calc(100vh-4rem)] bg-background">
       <ChatContainer

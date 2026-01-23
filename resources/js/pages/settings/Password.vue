@@ -77,7 +77,7 @@ function updatePassword() {
           </div>
 
           <div class="grid gap-2">
-            <Label for="password">New password</Label>
+            <Label for="password">كلمة مرور جديدة</Label>
             <Input
               id="password"
               ref="passwordInput"
@@ -85,20 +85,20 @@ function updatePassword() {
               type="password"
               class="mt-1 block w-full"
               autocomplete="new-password"
-              placeholder="New password"
+              placeholder="كلمة مرور جديدة"
             />
             <InputError :message="form.errors.password" />
           </div>
 
           <div class="grid gap-2">
-            <Label for="password_confirmation">Confirm password</Label>
+            <Label for="password_confirmation">تأكيد كلمة المرور</Label>
             <Input
               id="password_confirmation"
               v-model="form.password_confirmation"
               type="password"
               class="mt-1 block w-full"
               autocomplete="new-password"
-              placeholder="Confirm password"
+              placeholder="تأكيد كلمة المرور"
             />
             <InputError
               :message="form.errors.password_confirmation"
@@ -107,7 +107,7 @@ function updatePassword() {
 
           <div class="flex items-center gap-4">
             <Button :disabled="form.processing">
-              Save password
+              حفظ كلمة المرور
             </Button>
 
             <Transition
@@ -120,7 +120,7 @@ function updatePassword() {
                 v-show="form.recentlySuccessful"
                 class="text-sm text-neutral-600"
               >
-                Saved.
+                تم الحفظ.
               </p>
             </Transition>
           </div>

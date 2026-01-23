@@ -47,10 +47,10 @@ function handleNewChat() {
           @click="handleNewChat"
         >
           <Icon icon="lucide:plus" />
-          <span class="md:sr-only">New Chat</span>
+          <span class="md:sr-only">محادثة جديدة</span>
         </Button>
       </TooltipTrigger>
-      <TooltipContent>New Chat</TooltipContent>
+      <TooltipContent>محادثة جديدة</TooltipContent>
     </Tooltip>
 
     <ModelSelector

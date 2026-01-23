@@ -23,10 +23,10 @@ function submit() {
 
 <template>
   <AuthLayout
-    title="Forgot password"
-    description="Enter your email to receive a password reset link"
+    title="نسيت كلمة المرور"
+    description="أدخل بريدك الإلكتروني لتلقي رابط إعادة تعيين كلمة المرور"
   >
-    <Head title="Forgot password" />
+    <Head title="نسيت كلمة المرور" />
 
     <div
       v-if="status"
@@ -57,15 +57,15 @@ function submit() {
               v-if="form.processing"
               class="h-4 w-4 animate-spin"
             />
-            Email password reset link
+            إرسال رابط إعادة التعيين
           </Button>
         </div>
       </form>
 
       <div class="space-x-1 text-center text-sm text-muted-foreground">
-        <span>Or, return to</span>
+        <span>أو، العودة إلى</span>
         <TextLink :href="route('login')">
-          log in
+          تسجيل الدخول
         </TextLink>
       </div>
     </div>

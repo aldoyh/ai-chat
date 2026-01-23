@@ -37,7 +37,7 @@ function handleLogout() {
       <DropdownMenuItem :as-child="true">
         <Link class="block w-full" :href="route('login')" as="button">
           <LogIn class="mr-2 h-4 w-4" />
-          Login
+          تسجيل الدخول
         </Link>
       </DropdownMenuItem>
     </DropdownMenuGroup>
@@ -53,7 +53,7 @@ function handleLogout() {
           as="button"
         >
           <Settings class="mr-2 h-4 w-4" />
-          Settings
+          الإعدادات
         </Link>
       </DropdownMenuItem>
     </DropdownMenuGroup>
@@ -67,7 +67,7 @@ function handleLogout() {
         @click="handleLogout"
       >
         <LogOut class="mr-2 h-4 w-4" />
-        Log out
+        تسجيل الخروج
       </Link>
     </DropdownMenuItem>
   </template>

@@ -6,7 +6,7 @@ const page = usePage<SharedData>()
 </script>
 
 <template>
-  <Head title="Welcome">
+  <Head title="مرحباً">
     <link rel="preconnect" href="https://rsms.me/">
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
   </Head>
@@ -22,20 +22,20 @@ const page = usePage<SharedData>()
           :href="route('chats.index')"
           class="inline-block rounded-sm border border-[#19140035] px-5 py-1.5 text-sm leading-normal text-[#1b1b18] hover:border-[#1915014a] dark:border-[#3E3E3A] dark:text-[#EDEDEC] dark:hover:border-[#62605b]"
         >
-          Chat
+          الدردشة
         </Link>
         <template v-else>
           <Link
             :href="route('login')"
             class="inline-block rounded-sm border border-transparent px-5 py-1.5 text-sm leading-normal text-[#1b1b18] hover:border-[#19140035] dark:text-[#EDEDEC] dark:hover:border-[#3E3E3A]"
           >
-            Log in
+            تسجيل الدخول
           </Link>
           <Link
             :href="route('register')"
             class="inline-block rounded-sm border border-[#19140035] px-5 py-1.5 text-sm leading-normal text-[#1b1b18] hover:border-[#1915014a] dark:border-[#3E3E3A] dark:text-[#EDEDEC] dark:hover:border-[#62605b]"
           >
-            Register
+            إنشاء حساب
           </Link>
         </template>
       </nav>
@@ -50,11 +50,11 @@ const page = usePage<SharedData>()
           class="flex-1 rounded-bl-lg rounded-br-lg bg-white p-6 pb-12 text-[13px] leading-[20px] shadow-[inset_0px_0px_0px_1px_rgba(26,26,0,0.16)] dark:bg-[#161615] dark:text-[#EDEDEC] dark:shadow-[inset_0px_0px_0px_1px_#fffaed2d] lg:rounded-br-none lg:rounded-tl-lg lg:p-20"
         >
           <h1 class="mb-1 font-medium">
-            Let's get started
+            لنبدأ
           </h1>
           <p class="mb-2 text-[#706f6c] dark:text-[#A1A09A]">
-            Laravel has an incredibly rich ecosystem. <br>We
-            suggest starting with the following.
+            لدى لارافل نظام بيئي غني جدًا.
+            نقترح أن تبدأ بالموارد التالية.
           </p>
           <ul class="mb-4 flex flex-col lg:mb-6">
             <li
@@ -72,13 +72,13 @@ const page = usePage<SharedData>()
                 </span>
               </span>
               <span>
-                Read the
+                اقرأ
                 <a
                   href="https://laravel.com/docs"
                   target="_blank"
                   class="ml-1 inline-flex items-center space-x-1 font-medium text-[#f53003] underline underline-offset-4 dark:text-[#FF4433]"
                 >
-                  <span>Documentation</span>
+                  <span>الوثائق</span>
                   <svg
                     width="{10}"
                     height="{11}"
@@ -111,7 +111,7 @@ const page = usePage<SharedData>()
                 </span>
               </span>
               <span>
-                Watch video tutorials at
+                شاهد دروس الفيديو على
                 <a
                   href="https://laracasts.com"
                   target="_blank"
@@ -143,7 +143,7 @@ const page = usePage<SharedData>()
                 target="_blank"
                 class="inline-block rounded-sm border border-black bg-[#1b1b18] px-5 py-1.5 text-sm leading-normal text-white hover:border-black hover:bg-black dark:border-[#eeeeec] dark:bg-[#eeeeec] dark:text-[#1C1C1A] dark:hover:border-white dark:hover:bg-white"
               >
-                Deploy now
+                نشر الآن
               </a>
             </li>
           </ul>

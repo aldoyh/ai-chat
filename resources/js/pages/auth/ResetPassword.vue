@@ -32,15 +32,15 @@ function submit() {
 
 <template>
   <AuthLayout
-    title="Reset password"
-    description="Please enter your new password below"
+    title="إعادة تعيين كلمة المرور"
+    description="يرجى إدخال كلمة المرور الجديدة أدناه"
   >
-    <Head title="Reset password" />
+    <Head title="إعادة تعيين كلمة المرور" />
 
     <form @submit.prevent="submit">
       <div class="grid gap-6">
         <div class="grid gap-2">
-          <Label for="email">Email</Label>
+          <Label for="email">البريد الإلكتروني</Label>
           <Input
             id="email"
             v-model="form.email"
@@ -54,7 +54,7 @@ function submit() {
         </div>
 
         <div class="grid gap-2">
-          <Label for="password">Password</Label>
+          <Label for="password">كلمة المرور</Label>
           <Input
             id="password"
             v-model="form.password"
@@ -63,14 +63,14 @@ function submit() {
             autocomplete="new-password"
             class="mt-1 block w-full"
             autofocus
-            placeholder="Password"
+            placeholder="كلمة المرور"
           />
           <InputError :message="form.errors.password" />
         </div>
 
         <div class="grid gap-2">
           <Label for="password_confirmation">
-            Confirm Password
+            تأكيد كلمة المرور
           </Label>
           <Input
             id="password_confirmation"
@@ -79,7 +79,7 @@ function submit() {
             name="password_confirmation"
             autocomplete="new-password"
             class="mt-1 block w-full"
-            placeholder="Confirm password"
+            placeholder="تأكيد كلمة المرور"
           />
           <InputError :message="form.errors.password_confirmation" />
         </div>
@@ -93,7 +93,7 @@ function submit() {
             v-if="form.processing"
             class="h-4 w-4 animate-spin"
           />
-          Reset password
+          إعادة تعيين كلمة المرور
         </Button>
       </div>
     </form>

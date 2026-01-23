@@ -21,7 +21,7 @@ defineProps<Props>()
 
 const breadcrumbs: BreadcrumbItem[] = [
   {
-    title: 'Profile settings',
+    title: 'إعدادات الملف الشخصي',
     href: '/settings/profile',
   },
 ]
@@ -42,31 +42,31 @@ function submit() {
 
 <template>
   <AppLayout :breadcrumbs="breadcrumbs">
-    <Head title="Profile settings" />
+    <Head title="إعدادات الملف الشخصي" />
 
     <SettingsLayout>
       <div class="flex flex-col space-y-6">
         <HeadingSmall
-          title="Profile information"
-          description="Update your name and email address"
+          title="معلومات الملف الشخصي"
+          description="حدّث اسمك وعنوان بريدك الإلكتروني"
         />
 
         <form class="space-y-6" @submit.prevent="submit">
           <div class="grid gap-2">
-            <Label for="name">Name</Label>
+            <Label for="name">الاسم</Label>
             <Input
               id="name"
               v-model="form.name"
               class="mt-1 block w-full"
               required
               autocomplete="name"
-              placeholder="Full name"
+              placeholder="الاسم الكامل"
             />
             <InputError class="mt-2" :message="form.errors.name" />
           </div>
 
           <div class="grid gap-2">
-            <Label for="email">Email address</Label>
+            <Label for="email">البريد الإلكتروني</Label>
             <Input
               id="email"
               v-model="form.email"
@@ -74,21 +74,21 @@ function submit() {
               class="mt-1 block w-full"
               required
               autocomplete="username"
-              placeholder="Email address"
+              placeholder="البريد الإلكتروني"
             />
             <InputError class="mt-2" :message="form.errors.email" />
           </div>
 
           <div v-if="mustVerifyEmail && !user.email_verified_at">
             <p class="-mt-4 text-sm text-muted-foreground">
-              Your email address is unverified.
+              عنوان بريدك الإلكتروني غير مُحقق.
               <Link
                 :href="route('verification.send')"
                 method="post"
                 as="button"
                 class="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
               >
-                Click here to resend the verification email.
+                انقر هنا لإعادة إرسال بريد التحقق.
               </Link>
             </p>
 
@@ -96,14 +96,13 @@ function submit() {
               v-if="status === 'verification-link-sent'"
               class="mt-2 text-sm font-medium text-green-600"
             >
-              A new verification link has been sent to your email
-              address.
+              تم إرسال رابط تحقق جديد إلى بريدك الإلكتروني.
             </div>
           </div>
 
           <div class="flex items-center gap-4">
             <Button :disabled="form.processing">
-              Save
+              حفظ
             </Button>
 
             <Transition
@@ -116,7 +115,7 @@ function submit() {
                 v-show="form.recentlySuccessful"
                 class="text-sm text-neutral-600"
               >
-                Saved.
+                تم الحفظ.
               </p>
             </Transition>
           </div>

@@ -5,7 +5,7 @@ import { useAuth } from '@/composables/useAuth'
 const { isGuest } = useAuth()
 
 const subtitle = computed(() =>
-  isGuest.value ? 'Please login to continue.' : 'How can I help you today?',
+  isGuest.value ? 'يرجى تسجيل الدخول للمتابعة.' : 'كيف يمكنني مساعدتك اليوم؟',
 )
 </script>
 
@@ -18,7 +18,7 @@ const subtitle = computed(() =>
       enter-to-class="opacity-1 translate-y-0"
     >
       <div class="text-2xl font-semibold">
-        Hello there!
+        مرحبًا!
       </div>
     </Transition>
 

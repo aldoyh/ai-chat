@@ -24,14 +24,14 @@ const props = defineProps<{
   availableModels: Model[]
 }>()
 
-const pageTitle = computed<string>(() => props.chat?.title || 'Chat')
+const pageTitle = computed<string>(() => props.chat?.title || 'الدردشة')
 const initialVisibility = computed<Visibility>(
   () => props.chat?.visibility || Visibility.PRIVATE,
 )
 
 const breadcrumbs: BreadcrumbItemType[] = [
   {
-    title: 'Chat',
+    title: 'الدردشة',
     href: route('chats.index'),
   },
 ]

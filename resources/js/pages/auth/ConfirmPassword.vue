@@ -22,15 +22,15 @@ function submit() {
 
 <template>
   <AuthLayout
-    title="Confirm your password"
-    description="This is a secure area of the application. Please confirm your password before continuing."
+    title="تأكيد كلمة المرور"
+    description="هذه منطقة آمنة من التطبيق. الرجاء تأكيد كلمة المرور قبل المتابعة."
   >
-    <Head title="Confirm password" />
+    <Head title="تأكيد كلمة المرور" />
 
     <form @submit.prevent="submit">
       <div class="space-y-6">
         <div class="grid gap-2">
-          <Label html-for="password">Password</Label>
+          <Label html-for="password">كلمة المرور</Label>
           <Input
             id="password"
             v-model="form.password"
@@ -50,7 +50,7 @@ function submit() {
               v-if="form.processing"
               class="h-4 w-4 animate-spin"
             />
-            Confirm Password
+            تأكيد كلمة المرور
           </Button>
         </div>
       </div>

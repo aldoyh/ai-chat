@@ -44,12 +44,12 @@ const { isGuest } = useAuth()
 
 const mainMenuItems = [
   {
-    label: 'New Chat',
+    label: 'محادثة جديدة',
     icon: 'lucide:message-circle-plus',
     href: route('chats.index'),
   },
   {
-    label: 'GitHub Repo',
+    label: 'مستودع GitHub',
     icon: 'lucide:github',
     href: 'https://github.com/pushpak1300/ai-chat',
     target: '_blank',
@@ -61,27 +61,27 @@ const chatHistoryGroups = computed(() =>
   [
     {
       key: 'today',
-      label: 'Today',
+      label: 'اليوم',
       items: groupedChatHistory?.value.today,
     },
     {
       key: 'yesterday',
-      label: 'Yesterday',
+      label: 'أمس',
       items: groupedChatHistory?.value.yesterday,
     },
     {
       key: 'lastSevenDays',
-      label: 'Last 7 Days',
+      label: 'آخر ٧ أيام',
       items: groupedChatHistory?.value.lastSevenDays,
     },
     {
       key: 'lastThirtyDays',
-      label: 'Last 30 Days',
+      label: 'آخر ٣٠ يومًا',
       items: groupedChatHistory?.value.lastThirtyDays,
     },
     {
       key: 'older',
-      label: 'Older',
+      label: 'أقدم',
       items: groupedChatHistory?.value.older,
     },
   ].filter(group => group.items.length > 0),
@@ -121,7 +121,7 @@ function isActiveChat(chatId: number) {
       v-if="isGuest && !hasAnyHistory"
       class="px-4 py-2 text-sm text-muted-foreground"
     >
-      Please login to see your chat history
+      يرجى تسجيل الدخول لعرض محفوظات المحادثات
     </div>
 
     <div
@@ -130,7 +130,7 @@ function isActiveChat(chatId: number) {
       aria-label="Chat History Navigation"
     >
       <SidebarGroupLabel v-if="isGuest">
-        To view chat history please login
+        لعرض محفوظات المحادثات، يرجى تسجيل الدخول
       </SidebarGroupLabel>
 
       <SidebarGroup
@@ -164,7 +164,7 @@ function isActiveChat(chatId: number) {
                   group.key === 'today' ? ['30s', '1m'] : '1m'
                 "
                 :href="route('chats.show', historyItem.id)"
-                :aria-label="`Open chat: ${historyItem.title}`"
+                :aria-label="`افتح المحادثة: ${historyItem.title}`"
                 class="block w-full"
               >
                 <span class="truncate">{{
@@ -190,13 +190,13 @@ function isActiveChat(chatId: number) {
             role="status"
             aria-live="polite"
           >
-            <div>Loading more chats...</div>
+            <div>جارٍ تحميل مزيد من المحادثات...</div>
           </SidebarGroupLabel>
         </template>
       </WhenVisible>
 
       <SidebarGroupLabel class="mt-2 text-muted-foreground" role="status">
-        <span>You have reached the end of your chat history.</span>
+        <span>لقد وصلت إلى نهاية محفوظات المحادثات.</span>
       </SidebarGroupLabel>
     </div>
   </div>

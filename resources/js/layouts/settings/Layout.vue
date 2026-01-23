@@ -7,15 +7,15 @@ import { Separator } from '@/components/ui/separator'
 
 const sidebarNavItems: NavItem[] = [
   {
-    title: 'Profile',
+    title: 'الملف الشخصي',
     href: '/settings/profile',
   },
   {
-    title: 'Password',
+    title: 'كلمة المرور',
     href: '/settings/password',
   },
   {
-    title: 'Appearance',
+    title: 'المظهر',
     href: '/settings/appearance',
   },
 ]
@@ -30,8 +30,8 @@ const currentPath = page.props.ziggy?.location
 <template>
   <div class="px-4 py-6">
     <Heading
-      title="Settings"
-      description="Manage your profile and account settings"
+      title="الإعدادات"
+      description="إدارة ملفك الشخصي وإعدادات الحساب"
     />
 
     <div

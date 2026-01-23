@@ -43,7 +43,7 @@ const activeItemStyles = computed(
 
 const mainNavItems: NavItem[] = [
   {
-    title: 'Chat',
+    title: 'الدردشة',
     href: '/chat',
     icon: LayoutGrid,
   },
@@ -67,7 +67,7 @@ const mainNavItems: NavItem[] = [
             </SheetTrigger>
             <SheetContent side="left" class="w-[300px] p-6">
               <SheetTitle class="sr-only">
-                Navigation Menu
+                قائمة التنقل
               </SheetTitle>
               <SheetHeader class="flex justify-start text-left">
                 <AppLogoIcon
