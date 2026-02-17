@@ -10,5 +10,6 @@
   "Profile": "الملف الشخصي",
   "Settings": "الإعدادات",
   "Submit": "إرسال",
-  "Cancel": "إلغاء"
+  "Cancel": "إلغاء",
+  "A reset link will be sent if the account exists.": "سيتم إرسال رابط إعادة تعيين كلمة المرور إذا كان الحساب موجودًا."
 }
