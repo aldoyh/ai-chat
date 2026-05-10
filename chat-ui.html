@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ollama Smart Chat</title>
+    <link rel="icon" href="data:,">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <style>
+        /* Same CSS as previous, plus Model Selector styles */
+        :root {
+            --bg: #0d1117;
+            --surface: #161b22;
+            --border: #30363d;
+            --text: #e6edf3;
+            --accent: #58a6ff;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 260px;
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .session-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px;
+        }
+
+        .session-item {
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 14px;
+        }
+
+        .session-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .session-item.active {
+            background: rgba(88, 166, 255, 0.15);
+            color: var(--accent);
+        }
+
+        .main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* New Header for Model Selection */
+        .top-bar {
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .model-selector {
+            background: var(--surface);
+            color: var(--text);
+            border: 1px solid var(--border);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            min-width: 200px;
+        }
+
+        .chat-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .msg {
+            margin-bottom: 16px;
+        }
+
+        .msg.user .msg-content {
+            background: var(--accent);
+            color: black;
+            padding: 10px 14px;
+            border-radius: 12px;
+            display: inline-block;
+            max-width: 80%;
+        }
+
+        .msg.assistant .msg-content {
+            padding: 10px 0;
+            max-width: 100%;
+            line-height: 1.6;
+        }
+
+        pre {
+            background: #0d1117;
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            position: relative;
+        }
+
+        code {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+        }
+
+        .input-area {
+            padding: 16px;
+            border-top: 1px solid var(--border);
+            background: var(--surface);
+        }
+
+        .input-wrapper {
+            display: flex;
+            gap: 10px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px;
+        }
+
+        textarea {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text);
+            resize: none;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .send-btn {
+            background: var(--accent);
+            border: none;
+            color: black;
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+        }
+
+        .status-dot.online {
+            background: #3fb950;
+        }
+
+        .status-dot.offline {
+            background: #f85149;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div style="font-weight:600; margin-bottom:10px">Chats</div>
+            <button class="new-chat-btn"
+                style="width:100%; padding:10px; background:var(--accent); color:black; border:none; border-radius:6px; cursor:pointer;"
+                onclick="createSession()">+ New Chat</button>
+        </div>
+        <div class="session-list" id="sessionList"></div>
+    </div>
+
+    <div class="main">
+        <!-- Top Bar with Model Selection -->
+        <div class="top-bar">
+            <div>
+                <span id="statusIndicator" style="font-size:12px; color:var(--text);"><span
+                        class="status-dot offline"></span>Disconnected</span>
+            </div>
+            <select id="modelSelector" class="model-selector" onchange="savePreference()">
+                <option value="">Auto (Best Available)</option>
+                <!-- Populated dynamically -->
+            </select>
+        </div>
+
+        <div class="chat-container" id="chatContainer">
+            <div style="text-align:center; margin-top:20%; color:var(--text);">
+                Select a model or start typing.
+            </div>
+        </div>
+
+        <div class="input-area">
+            <div class="input-wrapper">
+                <textarea id="userInput" rows="1" placeholder="Type a message..."></textarea>
+                <button class="send-btn" id="sendButton" onclick="sendMessage()">➤</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API = 'chat-ui.php';
+        let currentSessionId = null;
+        let isStreaming = false;
+        let availableModels = [];
+
+        // Elements
+        const modelSelector = document.getElementById('modelSelector');
+        const chatContainer = document.getElementById('chatContainer');
+        const sessionList = document.getElementById('sessionList');
+        const statusIndicator = document.getElementById('statusIndicator');
+        const userInput = document.getElementById('userInput');
+        const sendButton = document.getElementById('sendButton');
+
+        // --- Initialization ---
+
+        async function init() {
+            await checkStatus();
+            await loadSessions();
+            createSession(); // Start fresh
+        }
+
+        // --- Model Discovery & Status ---
+
+        async function checkStatus() {
+            try {
+                const res = await fetch(`${API}?action=status`);
+                const data = await res.json();
+
+                // Update Status Dot
+                const dot = statusIndicator.querySelector('.status-dot');
+                if (data.status === 'connected') {
+                    statusIndicator.innerHTML = `<span class="status-dot online"></span> Ollama Connected`;
+                } else {
+                    statusIndicator.innerHTML = `<span class="status-dot offline"></span> Ollama Offline (Cloud Fallback)`;
+                }
+
+                // Populate Model Selector
+                modelSelector.innerHTML = '<option value="">Auto (Best Available)</option>';
+
+                // Add Local Models
+                if (data.local_models && data.local_models.length > 0) {
+                    const group = document.createElement('optgroup');
+                    group.label = "🖥️ Local Ollama";
+                    data.local_models.forEach(m => {
+                        const opt = document.createElement('option');
+                        opt.value = m.name;
+                        opt.textContent = m.name;
+                        group.appendChild(opt);
+                    });
+                    modelSelector.appendChild(group);
+                }
+
+                // Add Cloud Models
+                // (Flattened for simplicity, could be nested)
+                if (data.cloud_models && data.cloud_models.length > 0) {
+                    const group = document.createElement('optgroup');
+                    group.label = "☁️ Cloud";
+                    data.cloud_models.flat().forEach(model => {
+                        const opt = document.createElement('option');
+                        opt.value = model;
+                        opt.textContent = model;
+                        group.appendChild(opt);
+                    });
+                    modelSelector.appendChild(group);
+                }
+
+                const preferredModel = localStorage.getItem('preferred_model');
+                if (preferredModel && [...modelSelector.options].some(option => option.value === preferredModel)) {
+                    modelSelector.value = preferredModel;
+                }
+
+            } catch (e) {
+                console.error("Connection failed", e);
+                statusIndicator.innerHTML = `<span class="status-dot offline"></span> PHP API Unreachable`;
+            }
+        }
+
+        // --- Chat Logic ---
+
+        async function sendMessage() {
+            const text = userInput.value.trim();
+            const selectedModel = modelSelector.value; // Get chosen model
+
+            if (!text || isStreaming) return;
+            if (!currentSessionId) createSession();
+
+            appendMessage('user', text);
+            userInput.value = '';
+            sendButton.disabled = true;
+
+            // Optimistic UI: Show which model we are attempting to use
+            const modelLabel = selectedModel || "Auto";
+            const assistantBubble = appendMessage('assistant', `*Thinking (${modelLabel})...*`);
+
+            isStreaming = true;
+
+            try {
+                const res = await fetch(`${API}?action=stream`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        session_id: currentSessionId,
+                        message: text,
+                        model: selectedModel // Send user choice to backend
+                    })
+                });
+
+                if (!res.ok || !res.body) {
+                    let message = `Request failed (${res.status})`;
+                    try {
+                        const error = await res.json();
+                        message = error.error || error.message || message;
+                    } catch (e) {
+                        // Keep the HTTP status message when the response is not JSON.
+                    }
+                    throw new Error(message);
+                }
+
+                const reader = res.body.getReader();
+                const decoder = new TextDecoder();
+                let fullResponse = '';
+                let buffer = '';
+                let streamError = null;
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+
+                    buffer += decoder.decode(value, { stream: true });
+                    const lines = buffer.split(/\r?\n/);
+                    buffer = lines.pop() || '';
+
+                    lines.forEach(rawLine => {
+                        let line = rawLine;
+                        if (line.startsWith('data: ')) line = line.substring(6);
+                        if (!line.trim() || line.trim() === '[DONE]') return;
+
+                        try {
+                            const json = JSON.parse(line);
+                            if (json.error) {
+                                streamError = json.error;
+                                return;
+                            }
+                            // Ollama format: {message: {content: "..."}}
+                            // OpenAI format: {choices: [{delta: {content: "..."}}]}
+                            let token = '';
+
+                            if (json.message && json.message.content) {
+                                token = json.message.content; // Ollama Native
+                            } else if (json.choices && json.choices[0].delta) {
+                                token = json.choices[0].delta.content || ''; // OpenAI
+                            } else if (json.response) {
+                                token = json.response; // Ollama Generate (legacy)
+                            }
+
+                            fullResponse += token;
+                        } catch (e) {
+                            // Ignore parse errors (keep-alive newlines)
+                        }
+                    });
+
+                    if (streamError) throw new Error(streamError);
+
+                    // Update UI in real-time
+                    assistantBubble.innerHTML = marked.parse(fullResponse);
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                }
+
+                if (buffer.trim()) {
+                    try {
+                        const json = JSON.parse(buffer.replace(/^data:\s*/, ''));
+                        if (json.error) throw new Error(json.error);
+                        if (json.message && json.message.content) {
+                            fullResponse += json.message.content;
+                        } else if (json.choices && json.choices[0].delta) {
+                            fullResponse += json.choices[0].delta.content || '';
+                        } else if (json.response) {
+                            fullResponse += json.response;
+                        }
+                        assistantBubble.innerHTML = marked.parse(fullResponse);
+                    } catch (e) {
+                        // The stream can legally end with an empty keep-alive fragment.
+                    }
+                }
+
+                // Save final response
+                if (fullResponse.trim()) {
+                    await fetch(`${API}?action=save_response`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            session_id: currentSessionId,
+                            content: fullResponse
+                        })
+                    });
+                }
+
+                loadSessions(); // Update sidebar title
+
+            } catch (e) {
+                assistantBubble.innerHTML = `<span style="color:red">Error: ${e.message}</span>`;
+            } finally {
+                isStreaming = false;
+                sendButton.disabled = false;
+                userInput.focus();
+            }
+        }
+
+        // --- Utilities ---
+
+        function appendMessage(role, content) {
+            const div = document.createElement('div');
+            div.className = `msg ${role}`;
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'msg-content';
+
+            if (role === 'assistant') {
+                contentDiv.innerHTML = marked.parse(content);
+            } else {
+                contentDiv.textContent = content;
+            }
+
+            div.appendChild(contentDiv);
+            chatContainer.appendChild(div);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            return contentDiv;
+        }
+
+        function createSession() {
+            currentSessionId = 'chat-' + Date.now();
+            chatContainer.innerHTML = '';
+            appendMessage('assistant', 'Hello! How can I help you?');
+            loadSessions();
+        }
+
+        async function loadSessions() {
+            try {
+                const res = await fetch(`${API}?action=list_sessions`);
+                if (!res.ok) throw new Error('Unable to load sessions');
+                const data = await res.json();
+                sessionList.innerHTML = '';
+
+                (data.sessions || []).forEach(session => {
+                    const item = document.createElement('div');
+                    item.className = `session-item ${session.id === currentSessionId ? 'active' : ''}`;
+                    item.textContent = session.title || 'Untitled chat';
+                    item.title = session.title || session.id;
+                    item.onclick = () => loadSession(session.id);
+                    sessionList.appendChild(item);
+                });
+            } catch (e) {
+                console.error('Session load failed', e);
+            }
+        }
+
+        async function loadSession(id) {
+            try {
+                const res = await fetch(`${API}?action=load&session_id=${encodeURIComponent(id)}`);
+                if (!res.ok) throw new Error('Unable to open session');
+                const data = await res.json();
+
+                currentSessionId = id;
+                chatContainer.innerHTML = '';
+                (data.messages || []).forEach(message => appendMessage(message.role, message.content));
+                loadSessions();
+            } catch (e) {
+                console.error('Session open failed', e);
+            }
+        }
+
+        function savePreference() {
+            // Optional: Save selected model to localStorage
+            localStorage.setItem('preferred_model', modelSelector.value);
+        }
+
+        // Init
+        userInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        });
+
+        init();
+    </script>
+</body>
+
+</html>
