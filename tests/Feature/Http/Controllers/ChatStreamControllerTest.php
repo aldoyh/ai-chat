@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 use App\Models\Chat;
 use App\Models\User;
-use Prism\Prism\Prism;
 use App\Enums\ModelName;
+use Prism\Prism\Facades\Prism;
 use Prism\Prism\ValueObjects\Meta;
 use Prism\Prism\Enums\FinishReason;
 use Prism\Prism\ValueObjects\Usage;

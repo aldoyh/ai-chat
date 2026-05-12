@@ -16,13 +16,14 @@ final class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'password' => Hash::make('password'),
+            'name' => 'Aldoyh',
+            'email' => 'aldoyh@dev.doy.tech',
+            'password' => Hash::make('973@33334122'),
         ]);
 
         $this->call([
             ChatSeeder::class,
+            MessageSeeder::class,
         ]);
     }
 }
