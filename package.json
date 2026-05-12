@@ -52,9 +52,9 @@
     "eslint": "^9.39.4",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-format": "^1.5.0",
-    "eslint-plugin-oxlint": "^1.63.0",
+    "eslint-plugin-oxlint": "^1.64.0",
     "eslint-plugin-vue": "^9.33.0",
-    "typescript-eslint": "^8.59.2",
+    "typescript-eslint": "^8.59.3",
     "vue-tsc": "^2.2.12"
   }
 }

@@ -29,3 +29,4 @@
 #26 /Users/aldoyh/Sites/ai-chat/artisan(16): Illuminate\\Foundation\\Application->handleCommand(Object(Symfony\\Component\\Console\\Input\\ArgvInput))
 #27 {main}
 "} 
+[2026-05-12 20:30:59] local.ERROR: Chat stream error for chat 019e1de2-bda6-704c-b804-b255b8be8aa4: Prism\Prism\Providers\OpenAI\Maps\MessageMap::mapMessage(): Argument #1 ($message) must be of type Prism\Prism\Contracts\Message, array given  
