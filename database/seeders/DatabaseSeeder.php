@@ -12,17 +12,19 @@ final class DatabaseSeeder extends Seeder
 {
     /**
      * Seed the application's database.
+     *
+     * Uses firstOrCreate so re-running the seeder does not overwrite
+     * existing data or duplicate records.
      */
     public function run(): void
     {
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'password' => Hash::make('password'),
-        ]);
-
-        $this->call([
-            ChatSeeder::class,
-        ]);
+        User::firstOrCreate(
+            ['email' => 'admin@example.com'],
+            [
+                'name' => 'Admin',
+                'password' => Hash::make('password'),
+                'email_verified_at' => now(),
+            ]
+        );
     }
 }
