@@ -121,7 +121,7 @@ function isActiveChat(chatId: number) {
       v-if="isGuest && !hasAnyHistory"
       class="px-4 py-2 text-sm text-muted-foreground"
     >
-      يرجى تسجيل الدخول لعرض محفوظات المحادثات
+      ابدأ محادثة كضيف الآن، أو أنشئ حسابًا لحفظ السجل عبر الأجهزة.
     </div>
 
     <div
@@ -129,16 +129,12 @@ function isActiveChat(chatId: number) {
       role="navigation"
       aria-label="Chat History Navigation"
     >
-      <SidebarGroupLabel v-if="isGuest">
-        لعرض محفوظات المحادثات، يرجى تسجيل الدخول
-      </SidebarGroupLabel>
-
       <SidebarGroup
         v-for="group in chatHistoryGroups"
         :key="group.key"
         class="px-2 py-0"
       >
-        <SidebarGroupLabel v-if="!isGuest">
+        <SidebarGroupLabel>
           {{ group.label }}
         </SidebarGroupLabel>
         <SidebarMenu>

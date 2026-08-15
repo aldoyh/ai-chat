@@ -94,6 +94,28 @@ describe('ChatController', function (): void {
             $response->assertRedirect(route('chats.show', $chat));
         });
 
+        it('creates a guest chat when no user is authenticated', function (): void {
+            $this->post(route('logout'));
+
+            $data = [
+                'message' => 'Anonymous chat message',
+                'visibility' => 'private',
+                'model' => ModelName::GPT_5_NANO->value,
+            ];
+
+            $response = $this->post(route('chats.store'), $data);
+
+            $guestUserId = session('guest_user_id');
+            $chat = Chat::query()->where('user_id', $guestUserId)->first();
+
+            expect($guestUserId)->not->toBeNull()
+                ->and($chat)->not->toBeNull()
+                ->and($chat->title)->toBe('Anonymous chat message')
+                ->and($chat->visibility)->toBe('private');
+
+            $response->assertRedirect(route('chats.show', $chat));
+        });
+
         it('validates required fields', function (): void {
             $response = $this->post(route('chats.store'), []);
 

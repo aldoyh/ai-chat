@@ -8,11 +8,14 @@ use Generator;
 use Throwable;
 use App\Models\Chat;
 use App\Models\Message;
+use App\Models\User;
 use App\Enums\ModelName;
 use Prism\Prism\Facades\Prism;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\ChatStreamRequest;
 use Illuminate\Support\Facades\Response;
+use App\Services\ChatIdentityResolver;
 use Prism\Prism\Streaming\Events\ThinkingEvent;
 use Prism\Prism\Streaming\Events\TextDeltaEvent;
 use Prism\Prism\ValueObjects\Messages\UserMessage;
@@ -21,8 +24,18 @@ use Prism\Prism\ValueObjects\Messages\AssistantMessage;
 
 final class ChatStreamController extends Controller
 {
+    public function __construct(
+        private readonly ChatIdentityResolver $chatIdentityResolver,
+    ) {
+    }
+
     public function __invoke(ChatStreamRequest $request, Chat $chat): StreamedResponse
     {
+        $actor = $this->chatIdentityResolver->resolve($request);
+        abort_unless($actor instanceof User, 403);
+
+        Gate::forUser($actor)->authorize('update', $chat);
+
         $userMessage = $request->string('message')->trim()->value();
         $model = $request->enum('model', ModelName::class, ModelName::GPT_5_NANO);
 
@@ -105,6 +118,6 @@ final class ChatStreamController extends Controller
                 'user' => new UserMessage(content: $message->parts['text'] ?? ''),
                 'assistant' => new AssistantMessage(content: $message->parts['text'] ?? ''),
             })
-            ->toArray();
+            ->all();
     }
 }

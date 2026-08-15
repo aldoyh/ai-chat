@@ -6,7 +6,6 @@ import ChatAction from '@/components/chat/ChatAction.vue'
 import ModelSelector from '@/components/chat/ModelSelector.vue'
 import VisibilitySelector from '@/components/chat/VisibilitySelector.vue'
 import { SidebarTrigger } from '@/components/ui/sidebar'
-import { useAuth } from '@/composables/useAuth'
 
 withDefaults(
   defineProps<{
@@ -18,7 +17,6 @@ withDefaults(
 )
 
 const page = usePage<SharedData>()
-const { isGuest } = useAuth()
 </script>
 
 <template>
@@ -32,7 +30,7 @@ const { isGuest } = useAuth()
       </template>
     </div>
     <div
-      v-if="page.url.startsWith('/chat') && !isGuest"
+      v-if="page.url.startsWith('/chat')"
       class="items-center gap-2 hidden md:flex"
     >
       <ChatAction />

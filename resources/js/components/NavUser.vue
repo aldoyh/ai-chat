@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ChevronsUpDown } from 'lucide-vue-next'
+import { ChevronsUpDown } from '@lucide/vue'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,7 +20,7 @@ const { isMobile, state } = useSidebar()
 
 const guestUser = {
   id: 0,
-  name: 'Guest User',
+  name: 'مستخدم مجهول',
   email: '',
   avatar: '',
   email_verified_at: null,

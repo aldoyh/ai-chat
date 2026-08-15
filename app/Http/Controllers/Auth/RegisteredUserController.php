@@ -39,6 +39,8 @@ final class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        $guestUserId = $request->session()->get('guest_user_id');
+
         $user = User::query()->create([
             'name' => $request->name,
             'email' => $request->email,
@@ -48,6 +50,16 @@ final class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
+
+        if ($guestUserId) {
+            \App\Models\Chat::query()
+                ->where('user_id', $guestUserId)
+                ->update(['user_id' => $user->id]);
+
+            \App\Models\User::query()
+                ->where('id', $guestUserId)
+                ->delete();
+        }
 
         return to_route('chats.index');
     }

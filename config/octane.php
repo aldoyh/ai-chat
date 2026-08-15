@@ -44,6 +44,21 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Octane Host & Port
+    |--------------------------------------------------------------------------
+    |
+    | These values determine the IP address and port the Octane HTTP server
+    | binds to. Without them, Octane falls back to reading $_ENV directly,
+    | which is not populated when the application config is cached.
+    |
+    */
+
+    'host' => env('OCTANE_HOST', '127.0.0.1'),
+
+    'port' => env('OCTANE_PORT', 8000),
+
+    /*
+    |--------------------------------------------------------------------------
     | Force HTTPS
     |--------------------------------------------------------------------------
     |

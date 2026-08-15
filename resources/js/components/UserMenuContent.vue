@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { User } from '@/types'
 import { Link, router } from '@inertiajs/vue3'
-import { LogIn, LogOut, Settings } from 'lucide-vue-next'
+import { LogIn, LogOut, Settings, UserPlus } from '@lucide/vue'
 import {
   DropdownMenuGroup,
   DropdownMenuItem,
@@ -38,6 +38,12 @@ function handleLogout() {
         <Link class="block w-full" :href="route('login')" as="button">
           <LogIn class="mr-2 h-4 w-4" />
           تسجيل الدخول
+        </Link>
+      </DropdownMenuItem>
+      <DropdownMenuItem :as-child="true">
+        <Link class="block w-full" :href="route('register')" as="button">
+          <UserPlus class="mr-2 h-4 w-4" />
+          إنشاء حساب
         </Link>
       </DropdownMenuItem>
     </DropdownMenuGroup>

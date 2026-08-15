@@ -31,9 +31,23 @@ final class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+        $guestUserId = $request->session()->get('guest_user_id');
+
         $request->authenticate();
 
         $request->session()->regenerate();
+
+        $user = $request->user();
+
+        if ($guestUserId && $user) {
+            \App\Models\Chat::query()
+                ->where('user_id', $guestUserId)
+                ->update(['user_id' => $user->id]);
+
+            \App\Models\User::query()
+                ->where('id', $guestUserId)
+                ->delete();
+        }
 
         return redirect()->intended(route('chats.index', absolute: false));
     }

@@ -12,12 +12,10 @@ Route::get('/', function () {
 
 Route::resource('chat', ChatController::class)
     ->names('chats')
-    ->except(['create', 'edit'])
-    ->middlewareFor(['store', 'update', 'destroy'], ['auth', 'verified']);
+    ->except(['create', 'edit']);
 
 Route::post('/chat/stream/{chat}', ChatStreamController::class)
-    ->name('chat.stream')
-    ->middleware(['auth', 'verified']);
+    ->name('chat.stream');
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';

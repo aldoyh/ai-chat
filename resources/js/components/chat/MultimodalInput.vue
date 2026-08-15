@@ -10,7 +10,6 @@ import StopButton from '@/components/chat/StopButton.vue'
 import SuggestedActions from '@/components/chat/SuggestedActions.vue'
 import Button from '@/components/ui/button/Button.vue'
 import Textarea from '@/components/ui/textarea/Textarea.vue'
-import { useAuth } from '@/composables/useAuth'
 import { useChatInput } from '@/composables/useChatInput'
 
 const props = defineProps<{
@@ -29,7 +28,6 @@ const emit = defineEmits<{
   scrollToBottom: []
 }>()
 
-const { isGuest } = useAuth()
 const { input } = useChatInput()
 const { isFetching, isStreaming } = useStream(`stream/${props.chatId}`, {
   id: props.streamId,
@@ -39,7 +37,7 @@ const textareaRef = ref<HTMLTextAreaElement>()
 const uploadQueue = ref<Array<string>>([])
 
 const canSendMessage = computed(() => !isFetching.value && !isStreaming.value)
-const isDisabled = computed(() => props.isReadonly || isGuest.value)
+const isDisabled = computed(() => props.isReadonly)
 const showSuggestedActions = computed(
   () =>
     props.messages.length === 0

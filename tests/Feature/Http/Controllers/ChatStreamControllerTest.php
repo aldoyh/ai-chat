@@ -45,6 +45,40 @@ describe('ChatStreamController', function (): void {
         expect($content)->toContain('Hello, how can I help you today?');
     });
 
+    it('streams a guest-owned chat without requiring login', function (): void {
+        $this->post(route('logout'));
+
+        $guestUser = User::factory()->create();
+        $this->withSession(['guest_user_id' => $guestUser->id]);
+
+        $chat = Chat::factory()->for($guestUser)->create();
+
+        Prism::fake([
+            TextResponseFake::make()
+                ->withText('Welcome, anonymous user.')
+                ->withFinishReason(FinishReason::Stop)
+                ->withUsage(new Usage(25, 15))
+                ->withMeta(new Meta('guest-response', 'gpt-4o-mini')),
+        ])->withFakeChunkSize(1000);
+
+        $response = $this->post(route('chat.stream', $chat), [
+            'message' => 'Hello from a guest',
+            'model' => ModelName::GPT_5_MINI->value,
+        ]);
+
+        $response->assertOk();
+        $response->assertStreamed();
+
+        $content = $response->streamedContent();
+        expect($content)->toContain('Welcome, anonymous user.');
+
+        $userMessage = $chat->messages()->where('role', 'user')->latest()->first();
+        $assistantMessage = $chat->messages()->where('role', 'assistant')->latest()->first();
+
+        expect($userMessage->parts)->toBe(['text' => 'Hello from a guest']);
+        expect($assistantMessage->parts)->toBe(['text' => 'Welcome, anonymous user.']);
+    });
+
     it('handles mixed chunk types in streaming response', function (): void {
         Prism::fake([
             (new ResponseBuilder)

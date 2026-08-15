@@ -7,7 +7,6 @@ namespace App\Http\Requests;
 use App\Enums\ModelName;
 use App\Enums\Visibility;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\ValidationRule;
 
@@ -18,7 +17,7 @@ final class StoreChatRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Auth::check();
+        return true;
     }
 
     /**

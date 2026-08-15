@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Middleware;
 
 use Inertia\Middleware;
+use App\Services\ChatIdentityResolver;
 use App\Enums\ModelName;
 use Tighten\Ziggy\Ziggy;
 use Illuminate\Http\Request;
@@ -44,6 +45,7 @@ final class HandleInertiaRequests extends Middleware
             'name' => config('app.name'),
             'auth' => [
                 'user' => $request->user(),
+                'guestUser' => app(ChatIdentityResolver::class)->resolve($request),
             ],
             'ziggy' => [
                 ...(new Ziggy)->toArray(),
